@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -206,11 +207,18 @@ Talk to him, play with him, and see what he can do!
 
 <center>
 
-<img src="https://www.minttag-bremen.de/wp-content/uploads/2023/09/ID-10-scratch.webp" width="300">
-
-</center>
+<img src="https://www.minttag-bremen.de/wp-content/uploads/2023/09/ID-10-scratch.webp" width="170">
+<iframe
+    width="250"
+    height="200"
+    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
 <h2>
-<a href="https://github.com/river409/talkingscratch/tree/main/talkingscratch.exe" download>
+<a href="https://drive.google.com/drive/folders/1kcJV1a6o7FiiBNBtJvye3YUKiX1rmQWB?usp=sharing" download>
     Download .exe Now! (204MB)
 </a></h2>
 
@@ -218,7 +226,7 @@ Talk to him, play with him, and see what he can do!
 </div>
 
 
-
+</center>
 
 
 <div class="box">
@@ -233,7 +241,10 @@ Talk to him, play with him, and see what he can do!
 
 <li>Play music and sounds</li>
 
-<li>Discover hidden surprises</li>
+<li>
+<a href="https://github.com/River409/talkingscratch/" download>
+    Click here to see our github!
+</a></li>
 
 </ul>
 
@@ -251,7 +262,7 @@ Talk to him, play with him, and see what he can do!
 
 <ul>
 
-<li>Windows 7 / 8 / 10</li>
+<li>Windows 7 or more</li>
 
 <li>2GB RAM</li>
 
@@ -272,8 +283,7 @@ Talk to him, play with him, and see what he can do!
 
 <h2>Player Reviews</h2>
 
-
-<div class="review-container">
+<div class="review-container" id="reviewContainer">
 
 
 
@@ -292,6 +302,24 @@ tommymcleish01@gmail.com
 <br>
 
 "This game is awesome! Scratch is so funny. I love talking to him!"
+
+</div>
+
+<div class="review">
+
+<img class="pfp" src="https://i1.sndcdn.com/avatars-000527379909-1a7kcx-t1080x1080.jpg">
+
+<b>★★★★★</b><br>
+
+<span class="review-name">
+Sammylovescats05
+</span>
+
+· July 15 2012
+
+<br>
+
+"I had a very good time because I learned how to bypass the bad word filter haha"
 
 </div>
 
@@ -345,12 +373,12 @@ Kayla Johnson
 
 <div class="review">
 
-<img class="pfp" src="https://res.cloudinary.com/purnesh/image/upload/v1571327834/ufrbqss8jdb7gkwlqkxz.png">
+<img class="pfp" src="https://i1.sndcdn.com/avatars-000607953870-y3zbs7-t240x240.jpg">
 
 <b>★★★★☆</b><br>
 
 <span class="review-name">
-steveoconnor41@gmail.com
+Steve O'Neil
 </span>
 
 · May 31 2011
@@ -407,7 +435,7 @@ Catherinemurphy2
 
 <div class="review">
 
-<img class="pfp" src="https://i1.sndcdn.com/avatars-000377702369-5rjsxw-t1080x1080.jpg">
+<img class="pfp" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtolWDSnASEQz6IMO8hwHi3QyOWNBkNG3EwL-O1HMZsebfurElwD2Ip00&s=10">
 
 <b>★★★☆☆</b><br>
 
@@ -431,7 +459,28 @@ Caymanboy100
 
 </div>
 
+<div class="box">
+    <h2>Write a Review</h2>
 
+    <input type="text" id="reviewName" placeholder="Your name" style="width:100%;padding:8px;"><br><br>
+
+    <select id="reviewStars" style="padding:6px;">
+        <option value="★★★★★">★★★★★</option>
+        <option value="★★★★☆">★★★★☆</option>
+        <option value="★★★☆☆">★★★☆☆</option>
+        <option value="★★☆☆☆">★★☆☆☆</option>
+        <option value="★☆☆☆☆">★☆☆☆☆</option>
+    </select>
+
+    <br><br>
+
+    <textarea id="reviewText" placeholder="Write your review..."
+        style="width:100%;height:100px;padding:8px;"></textarea>
+
+    <br><br>
+
+    <button onclick="addReview()">Post Review</button>
+</div>
 
 
 
@@ -455,7 +504,78 @@ Last updated: July 2015 (Service no longer active)
 
 </div>
 
+<script>
+function getDate() {
+    const d = new Date();
+    return d.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+    });
+}
 
+function createReview(review) {
+    const div = document.createElement("div");
+    div.className = "review";
+
+    div.innerHTML = `
+        <img class="pfp" src="https://i.redd.it/old-youtube-default-icons-v0-5hbfm5bp8f661.png?width=140&format=png&auto=webp&s=013f1c1caae6553e980e1fb85130ae3037165e26">
+        <b>${review.stars}</b><br>
+
+        <span class="review-name">${review.name}</span>
+
+        · ${review.date}
+
+        <br><br>
+
+        "${review.text}"
+    `;
+
+    document.getElementById("reviewContainer").prepend(div);
+}
+
+function saveReviews(reviews) {
+    localStorage.setItem("talkingScratchReviews", JSON.stringify(reviews));
+}
+
+function loadReviews() {
+    const reviews =
+        JSON.parse(localStorage.getItem("talkingScratchReviews")) || [];
+
+    reviews.forEach(createReview);
+}
+
+function addReview() {
+    const name = document.getElementById("reviewName").value.trim();
+    const stars = document.getElementById("reviewStars").value;
+    const text = document.getElementById("reviewText").value.trim();
+
+    if (!name || !text) {
+        alert("Please enter your name and a review.");
+        return;
+    }
+
+    const review = {
+        name,
+        stars,
+        text,
+        date: getDate()
+    };
+
+    createReview(review);
+
+    const reviews =
+        JSON.parse(localStorage.getItem("talkingScratchReviews")) || [];
+
+    reviews.unshift(review);
+    saveReviews(reviews);
+
+    document.getElementById("reviewName").value = "";
+    document.getElementById("reviewText").value = "";
+}
+
+loadReviews();
+</script>
 </body>
 
 </html>
